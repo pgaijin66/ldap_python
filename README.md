@@ -1,6 +1,6 @@
 # Change LDAP / VPN password
 
-A workaround solution for users to change their LDAP password as previously user had to log into Zeus to do that. Since, Zeus and smartOS is gone, this will be the place for users to log in and change their password.
+A workaround solution for users to change their LDAP password 
 
 # Build
 
@@ -20,4 +20,4 @@ docker run --rm -it --name demo ldap_pw_reset --username=pthapa
 
 
 # Whom do i contact
-SRE Team
+sthapaprabesh2020@gmail.com
