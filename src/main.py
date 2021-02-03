@@ -20,23 +20,28 @@ def logs_stuff():
 
 @click.command()
 @click.option('--username', help='Your LDAP username.')
-@click.option('--current_password', prompt='Your current LDAP password: ',
+@click.option('--current_password', prompt='Your current LDAP password',
               help='Your current LDAP password.', hide_input=True)
-@click.option('--new_password', prompt='Your new LDAP password: ',
+@click.option('--new_password', prompt='Enter your new LDAP password',
               help='Your new LDAP password.', hide_input=True)
-def reset_passwd(username, current_password, new_password):
+@click.option('--retype_password', prompt='Please retype your new LDAP password to confirm',
+              help='Your new LDAP password.', hide_input=True)
+def reset_passwd(username, current_password, new_password, retype_password):
     """Program to reset your LDAP password."""
     server = config('SERVER')
     l = ldap.initialize(f"ldap://{server}")
-    # current_password='Gaijin66'
-    # new_password='a8t9g65432r'
-    try:
-        logging.info('[*] Changing LDAP password !!!')
-        l.simple_bind_s(f"uid={username},ou=people,dc=audinate,dc=com", f"{current_password}")
-        l.passwd_s(f"uid={username},ou=people,dc=audinate,dc=com", f"{current_password}",f"{new_password}")
-        logging.info('[*] Password changed successfully !!!')
-    except:
-        logging.error('[*] Please check your credentials !!!')
+    if new_password == retype_password:
+        try:
+            logging.info('[*] Changing LDAP password !!!')
+            l.simple_bind_s(f"uid={username},ou=people,dc=audinate,dc=com", f"{current_password}")
+            l.passwd_s(f"uid={username},ou=people,dc=audinate,dc=com", f"{current_password}",f"{new_password}")
+            logging.info('[*] Password changed successfully !!!')
+        except:
+            logging.error('[*] Please check your credentials !!!')
+    else:
+        logging.error('[*] Password mismatched, Please check your credentials !!!')
+        exit
+
 
 
 if __name__=="__main__":
