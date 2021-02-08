@@ -1,4 +1,4 @@
-# Change LDAP / VPN password
+# Change LDAP password
 
 A workaround solution for users to change their LDAP password 
 
